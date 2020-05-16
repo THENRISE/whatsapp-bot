@@ -10,6 +10,8 @@ Este bot não precisa de APIs terceiras para funcinar, mas precisa de alguns req
 	- PySimpleGUI         4.19.0 [Documentação](https://pysimplegui.readthedocs.io/en/latest/)
 	- selenium            3.141.0 [Documentação](https://www.selenium.dev/documentation/en/webdriver/keyboard/)
 
+- Você ainda pode precisar instalar a biblioteca `python3-tk` para o funcionamento da interface.
+
 - No arquivo `main.py` altere a importação do `chromedriver` para o diretótio onde está o executável.
 
 ## Utilizando
