@@ -27,8 +27,11 @@ A seguinte janela será exibida:
 
 ![Tela do Aplicativo](.github/screen.png)
 
-Informe a mensagem quem quiser e no campo contatos, informe uma lista de nomes, um nome em cada linha, que deve estar exatamente como o nome do contato que aparece no chat do WhatsApp.
+Informe a mensagem que quiser e no campo contatos, informe uma lista de nomes, um nome em cada linha, que deve estar exatamente como o nome do contato que aparece no chat do WhatsApp.
 
 Clicando em iniciar uma nova janela do chrome será aberta, e você terá 30 segundos para scanear o QR code. Então o BOT manda a mensagem para todos os contatos listados em intervalos diferentes.
 
+Você pode usar o computador para outras atividades e também utilizar o WhatsApp no celular enquanto o BOT está funcionando.
+
+A configuração padrão de intervalos enviará uma média de 60 mensagens por hora, abaixar os intervalos enviará mais mensagens, porém exige que você tenha um bom computador e que não esteja executando tarefas intensivas durante a sua utilização.
 
