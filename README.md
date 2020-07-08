@@ -4,13 +4,16 @@
 
 Este bot não precisa de APIs terceiras para funcinar, mas precisa de alguns requisitos para funcionar:
 
-- Baixar o ChromeDriver e coloca-lo na pasta do projeto.
+- Baixar o [ChromeDriver](https://chromedriver.chromium.org/) e coloca-lo na pasta do projeto.
 - Instalar as seguintes bibliotecas Python utilizando o `pip3 install`:
 
-	- PySimpleGUI         4.19.0 [Documentação](https://pysimplegui.readthedocs.io/en/latest/)
-	- selenium            3.141.0 [Documentação](https://www.selenium.dev/documentation/en/webdriver/keyboard/)
+	- PySimpleGUI         4.19.0 [Documentação](https://pysimplegui.readthedocs.io/en/latest/) -> `# pip3 install pysimplegui`
+	- selenium            3.141.0 [Documentação](https://www.selenium.dev/documentation/en/webdriver/keyboard/) -> `# pip3 install selenium`
 
-- Você ainda pode precisar instalar a biblioteca `python3-tk` para o funcionamento da interface.
+- Você ainda pode precisar instalar a biblioteca `python3-tk` para o funcionamento da interface. Por exemplo:
+
+	- `# sudo apt install python3-tk`
+	- `# sudo pacman -S python3-tk`
 
 - No arquivo `main.py` altere a importação do `chromedriver` para o diretótio onde está o executável.
 

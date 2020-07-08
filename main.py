@@ -9,16 +9,19 @@ import os
 
 class Main:
 	def __init__(self):
+		# Se existirem dados da menagem salvos, carregue-os
 		if (os.path.exists('./messages.dat')):
 			initial_mesasge = pickle.load(open('./messages.dat', 'rb'))
 		else:
 			initial_mesasge = ''
 
+		# Se existirem dados dos contatos salvos, carregue-os
 		if (os.path.exists('./contacts.dat')):
 			initial_contacts = pickle.load(open('./contacts.dat', 'rb'))
 		else:
 			initial_contacts = ''
 
+		# Se existirem configurações de intervalo salvos, carregue-os
 		if (os.path.exists('./timing.dat')):
 			initial_timing = pickle.load(open('./timing.dat', 'rb'))
 		else:
@@ -98,7 +101,7 @@ class Main:
 		]
 
 		# Janela
-		self.window = sg.Window("WhatsApp BOT 0.3").layout(layout)
+		self.window = sg.Window("WhatsApp BOT 0.5").layout(layout)
 
 	def Start(self):
 		while True:
@@ -110,24 +113,34 @@ class Main:
 				quit()
 				break
 
+			self.message = self.values['message']
+			self.contact_list = self.values['contactList']
+			self.min_step_wait = self.values['minStepWait']
+			self.max_step_wait = self.values['maxStepWait']
+			self.min_next_wait = self.values['minNextWait']
+			self.max_next_wait = self.values['maxNextWait']
+			self.min_char_wait = self.values['minCharWait']
+			self.max_char_wait = self.values['maxCharWait']
+
 			# Clicar no botão salvar
 			if self.event in (None, 'Salvar'):
-				# Salvar em um arquivo as configurações
-				pickle.dump(self.values['message'], open('messages.dat', 'wb'))
-				pickle.dump(self.values['contactList'], open('contacts.dat', 'wb'))
+				# Salvar em arquivos as configurações
+				pickle.dump(self.message, open('messages.dat', 'wb'))
+				pickle.dump(self.contact_list, open('contacts.dat', 'wb'))
 				pickle.dump({
-					'minStepWait': self.values['minStepWait'],
-					'maxStepWait': self.values['maxStepWait'],
-					'minNextWait': self.values['minNextWait'],
-					'maxNextWait': self.values['maxNextWait'],
-					'minCharWait': self.values['minCharWait'],
-					'maxCharWait': self.values['maxCharWait']
+					'minStepWait': self.min_step_wait,
+					'maxStepWait': self.max_step_wait,
+					'minNextWait': self.min_next_wait,
+					'maxNextWait': self.max_next_wait,
+					'minCharWait': self.min_char_wait,
+					'maxCharWait': self.max_char_wait
 				}, open('timing.dat', 'wb'))
+
 				continue
 
 			if self.event in (None, 'Iniciar'):
 				# A mensagem a ser enviada, obtida pelo campo "Mensagem"
-				self.messages = self.values['message'].split('\n')
+				self.messages = self.message.split('\n')
 
 				# Nome dos grupos ou pessoas a quem você deseja enviar a mensagem
 				# Deve estar exatamente igual que aparece no WhatsApp
@@ -139,26 +152,20 @@ class Main:
 
 				# Configuração do WebDriver
 				options = webdriver.ChromeOptions()
-				# options = webdriver.FirefoxOptions()
 				options.add_argument('lang=pt-br')
 				self.driver = webdriver.Chrome(
-					executable_path=r'/usr/bin/chromedriver',
+					executable_path=r'./chromedriver',
 					options=options
 				)
-				# self.driver = webdriver.Firefox(
-				# 	executable_path=r'/usr/bin/geckodriver',
-				# 	options=options
-				# )
 
-				print(self.timing)
+				# Abrir o navegador e aguardar 30 segundos
+				time.sleep(5)
+				self.driver.get('https://web.whatsapp.com')
+				time.sleep(30)
+
 				self.SendMessage()
 
 	def SendMessage(self):
-		# Abrir o navegador e aguardar 30 segundos
-		time.sleep(5)
-		self.driver.get('https://web.whatsapp.com')
-		time.sleep(30)
-
 		# Para cada contato, enviar a mensagem
 		for contact in self.contact_list:
 			# Se o contato estiver vazio, pule para o próximo
@@ -179,7 +186,6 @@ class Main:
 			for message in self.messages:
 				# Escrever cada caractere da mensagem individualmente
 				for char in list(message):
-					print(char)
 					chat_box.send_keys(char)
 					time.sleep(random.uniform(float(self.timing['minCharWait']), float(self.timing['maxCharWait'])))
 				
@@ -192,7 +198,6 @@ class Main:
 					.key_up(Keys.ENTER) \
 					.key_up(Keys.SHIFT) \
 					.perform()
-				print('[Shift+Enter]')
 
 			# Selecionar o botão de enviar
 			send_button = self.driver.find_element_by_xpath('//span[@data-icon="send"]')
