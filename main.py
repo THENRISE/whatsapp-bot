@@ -172,22 +172,61 @@ class Main:
 			if (contact.replace(' ', '') == ''):
 				continue
 
-			# Selecionar o um contato no painel de contatos
+			# Pesquisar o contato no painel de contatos
+			search_box = self.driver.find_element_by_class_name('_3FRCZ')
+			search_slice = ''
+
+			time.sleep(random.uniform(float(self.timing['minStepWait']), float(self.timing['maxStepWait'])))
+			search_box.click()
+
+			# Apagar o texto que estiver escrito
+			while (self.driver.find_elements_by_class_name('_3FRCZ')[0].get_attribute('innerText') != ''):
+				time.sleep(random.uniform(float(self.timing['minCharWait']), float(self.timing['maxCharWait'])))
+				search_box_value.send_keys(Keys.BACKSPACE)
+
+			for char in list(contact):
+				# Valor interno do campo de texto para checagem
+				search_box_value = self.driver.find_elements_by_class_name('_3FRCZ')[0]
+				search_text = search_box_value.get_attribute('innerText')
+
+				while (search_slice + char == search_text + char):
+					search_box.send_keys(char)
+					time.sleep(random.uniform(float(self.timing['minCharWait']), float(self.timing['maxCharWait'])))
+
+					tmp_search_text = search_box_value.get_attribute('innerText')
+
+					if (search_slice + char == tmp_search_text):
+						search_slice += char
+			
+			# Selecionar o contato no painel de contatos
 			contact_panel = self.driver.find_element_by_xpath(f"//span[@title='{contact}']")
 			time.sleep(random.uniform(float(self.timing['minStepWait']), float(self.timing['maxStepWait'])))
 			contact_panel.click()
 
 			# Selecionar o campo de texto
-			chat_box = self.driver.find_element_by_class_name('_1Plpp')
+			chat_box = self.driver.find_element_by_class_name('_3uMse')
 			time.sleep(random.uniform(float(self.timing['minStepWait']), float(self.timing['maxStepWait'])))
 			chat_box.click()
 
+			message_slice = ''
+
 			# Para cada pedaço da mensagem envie a mensagem e aperte Shift+Enter
 			for message in self.messages:
+
 				# Escrever cada caractere da mensagem individualmente
 				for char in list(message):
-					chat_box.send_keys(char)
-					time.sleep(random.uniform(float(self.timing['minCharWait']), float(self.timing['maxCharWait'])))
+					# Valor interno do campo de texto para checagem
+					chat_box_value = self.driver.find_elements_by_class_name('_3FRCZ')[1]
+					inner_text = chat_box_value.get_attribute('innerText').replace('\n', '')
+
+					while (message_slice + char == inner_text + char):
+						chat_box.send_keys(char)
+						time.sleep(random.uniform(float(self.timing['minCharWait']), float(self.timing['maxCharWait'])))
+
+						tmp_inner_text = chat_box_value.get_attribute('innerText').replace('\n', '')
+
+						if (message_slice + char == tmp_inner_text):
+							message_slice += char
 				
 				time.sleep(random.uniform(float(self.timing['minStepWait']), float(self.timing['maxStepWait'])))
 
