@@ -15,7 +15,7 @@ Este bot não precisa de APIs terceiras para funcinar, mas precisa de alguns req
 	- `# sudo apt install python3-tk`
 	- `# sudo pacman -S python3-tk`
 
-- No arquivo `main.py` altere a importação do `chromedriver` para o diretótio onde está o executável.
+- No arquivo `main.py` altere a importação do `chromedriver` para o diretótio onde está o executável caso esteja em um diretório diferente ou nome diferente, mas recomendamos manter o padrão, o arquivo deve estar exatamente nomeado como `chromedriver` e deve também estar no diretório raiz do projeto.
 
 ## Utilizando
 
