@@ -3,3 +3,9 @@ messages.dat
 timing.dat
 .vscode
 chromedriver
+geckodriver*
+build
+dist
+__pycache__
+main.spec
+.pylintrc
