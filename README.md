@@ -45,4 +45,7 @@ Note que `_` significa que são espaços, um antes do emoji, e dois espaços dep
 
 A configuração padrão de intervalos enviará uma média de 60 mensagens por hora, abaixar os intervalos enviará mais mensagens, porém exige que você tenha um bom computador e que não esteja executando tarefas intensivas durante a sua utilização.
 
+Você pode usar o computador para outras atividades e também utilizar o WhatsApp no celular enquanto o BOT está funcionando.
+
+A configuração padrão de intervalos enviará uma média de 60 mensagens por hora, abaixar os intervalos enviará mais mensagens, porém exige que você tenha um bom computador e que não esteja executando tarefas intensivas durante a sua utilização.
 
