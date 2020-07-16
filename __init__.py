@@ -55,12 +55,12 @@ class HomeWindow(QWidget):
 			initial_timing = pickle.load(open('./timing.dat', 'rb'))
 		else:
 			initial_timing = {
-				'minStepWait': 2,
-				'maxStepWait': 4,
-				'minNextWait': 5,
-				'maxNextWait': 7,
-				'minCharWait': 0.3,
-				'maxCharWait': 0.7
+				'minStepWait': '2',
+				'maxStepWait': '4',
+				'minNextWait': '5',
+				'maxNextWait': '7',
+				'minCharWait': '0.3',
+				'maxCharWait': '0.7'
 			} # initial_timing
 
 		# Intervalo entre os passos
