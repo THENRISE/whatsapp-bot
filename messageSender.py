@@ -83,7 +83,7 @@ class MessageSender():
 				# Se o caractere foi digitado
 				if (char == search_text[-1]):
 					search_slice += char
-					last_char = ''
+					last_search_char = ''
 					continue
 
 				print('Tentando inserir o caractere [' + char + '] novamente.')
