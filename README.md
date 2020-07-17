@@ -2,7 +2,7 @@
 
 ## Configuração
 
-Este bot não precisa de APIs terceiras para funcionar, mas precisa de alguns requisitos para funcionar:
+Este bot não precisa de APIs terceiras para funcionar, mas necessita que alguns requisitos sejam atendidos:
 
 - Baixar o [ChromeDriver](https://chromedriver.chromium.org/) e coloca-lo na pasta do projeto.
 - Instalar as seguintes bibliotecas Python utilizando o `pip3 install`:
@@ -42,10 +42,6 @@ Você pode usar o computador para outras atividades e também utilizar o WhatsAp
 ```
 
 Note que `_` significa que são espaços, um antes do emoji, e dois espaços depois do emoji. Os símbolos `:` e também `%%` são obrigatórios entre a palavra chave do emoji.
-
-A configuração padrão de intervalos enviará uma média de 60 mensagens por hora, abaixar os intervalos enviará mais mensagens, porém exige que você tenha um bom computador e que não esteja executando tarefas intensivas durante a sua utilização.
-
-Você pode usar o computador para outras atividades e também utilizar o WhatsApp no celular enquanto o BOT está funcionando.
 
 A configuração padrão de intervalos enviará uma média de 60 mensagens por hora, abaixar os intervalos enviará mais mensagens, porém exige que você tenha um bom computador e que não esteja executando tarefas intensivas durante a sua utilização.
 
