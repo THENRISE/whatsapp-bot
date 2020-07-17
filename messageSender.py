@@ -56,6 +56,8 @@ class MessageSender():
 		self.await_by('step')
 		search_box.click()
 
+		search_box_value = self.driver.find_elements_by_class_name(self.search_box_name)[0]
+
 		# Apagar o texto que estiver escrito no campo de pesquisa
 		while (self.driver.find_elements_by_class_name(self.search_box_name)[0].get_attribute('innerText') != ''):
 			self.await_by('char')
@@ -89,9 +91,20 @@ class MessageSender():
 			last_search_char = char
 		
 		# Selecionar o contato no painel de contatos
-		contact_panel = self.driver.find_element_by_xpath(f"//span[@title='{contact}']")
-		self.await_by('step')
-		contact_panel.click()
+		try:
+			contact_panel = WebDriverWait(self.driver, 10) \
+				.until(
+					expected_conditions \
+						.presence_of_element_located((
+							By.XPATH,
+							f"//span[@title='{contact}']"
+						)) # presence_of_element_located
+				) # until
+			self.await_by('step')
+			contact_panel.click()
+		except:
+			print(f"Contato {contact} não encontrado. Pulando...")
+			return
 
 		# Selecionar o campo de texto
 		chat_box = self.driver.find_element_by_class_name(self.chat_box_name)
