@@ -2,7 +2,7 @@
 
 ## Configuração
 
-Este bot não precisa de APIs terceiras para funcionar, mas precisa de alguns requisitos para funcionar:
+Este bot não precisa de APIs terceiras para funcionar, mas necessita que alguns requisitos sejam atendidos:
 
 - Baixar o [ChromeDriver](https://chromedriver.chromium.org/) e coloca-lo na pasta do projeto.
 - Instalar as seguintes bibliotecas Python utilizando o `pip3 install`:
