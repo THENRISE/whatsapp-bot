@@ -61,6 +61,8 @@ class MessageSender():
 			self.await_by('char')
 			search_box_value.send_keys(Keys.BACKSPACE)
 
+		last_search_char = ''
+
 		# Digitar cada caractere do contato individualmente na caixa de pesquisa
 		for char in list(contact):
 			# Valor interno do campo de texto para checar
@@ -68,15 +70,23 @@ class MessageSender():
 			search_text = search_box_value.get_attribute('innerText')
 
 			# Se o caractere não for digitado, tentar novamente
-			while (search_slice + char == search_text + char):
+			# while (search_slice + char == search_text + char):
+			while ((search_text == '') or (char != search_text[-1]) or (char == last_search_char)):
 				search_box.send_keys(char)
 				self.await_by('char')
 
-				tmp_search_text = search_box_value.get_attribute('innerText')
+				search_text = search_box_value.get_attribute('innerText')
 
 				# Se o caractere foi digitado, registrar o sucesso
-				if (search_slice + char == tmp_search_text):
+				# Se o caractere foi digitado
+				if (char == search_text[-1]):
 					search_slice += char
+					last_char = ''
+					continue
+
+				print('Tentando inserir o caractere [' + char + '] novamente.')
+				
+			last_search_char = char
 		
 		# Selecionar o contato no painel de contatos
 		contact_panel = self.driver.find_element_by_xpath(f"//span[@title='{contact}']")
