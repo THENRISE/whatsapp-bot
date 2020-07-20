@@ -96,7 +96,7 @@ class MessageSender():
 				.until(
 					expected_conditions \
 						.presence_of_element_located((
-							By.XPATH,
+				~			By.XPATH,
 							f"//span[@title='{contact}']"
 						)) # presence_of_element_located
 				) # until
@@ -217,7 +217,7 @@ class MessageSender():
 
 					press_tab = True
 					continue
-				0
+
 				# Se o caractere não for digitado, tentar novamente
 				while ((inner_text == '') or (char != inner_text[-1]) or (char == last_char)):
 					chat_box.send_keys(char)
