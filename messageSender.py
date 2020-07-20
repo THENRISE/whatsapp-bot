@@ -48,7 +48,7 @@ class MessageSender():
 	def sendMessage(self, contact, messages):
 		# Se o contato estiver vazio, pule para o próximo
 		if (contact.replace(' ', '') == ''):
-			return
+			return False
 
 		# Pesquisar o contato no painel de contatos
 		search_box = self.driver.find_element_by_class_name(self.search_box_name)
@@ -102,9 +102,10 @@ class MessageSender():
 				) # until
 			self.await_by('step')
 			contact_panel.click()
-		except:
+		except Exception as error:
 			print(f"Contato {contact} não encontrado. Pulando...")
-			return
+			print(f"Exceção: {error}")
+			return False
 
 		# Selecionar o campo de texto
 		chat_box = self.driver.find_element_by_class_name(self.chat_box_name)
@@ -217,7 +218,7 @@ class MessageSender():
 
 					press_tab = True
 					continue
-				0
+
 				# Se o caractere não for digitado, tentar novamente
 				while ((inner_text == '') or (char != inner_text[-1]) or (char == last_char)):
 					chat_box.send_keys(char)
@@ -231,13 +232,13 @@ class MessageSender():
 					# Se o último caractere digitado for igual ao caractere atual
 					if (char == last_char):
 						# Se o caractere foi digitado
-						if (char == inner_text[-1] && char == inner_text[-2]):
+						if (char == inner_text[-1] and char == inner_text[-2]):
 							message_slice += char
 							last_char = ''
 							continue
 					
 					# Se o caractere foi digitado
-					if (char == inner_text[-1] && char == inner_text[-2]):
+					if (char == inner_text[-1]):
 						message_slice += char
 						last_char = ''
 						continue
@@ -258,6 +259,8 @@ class MessageSender():
 
 		# Aguardar para o próximo contato
 		self.await_by('next')
+
+		return True
 
 	def breakLine(self):
 		ActionChains(self.driver) \

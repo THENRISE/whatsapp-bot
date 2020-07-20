@@ -134,14 +134,19 @@ class HomeWindow(QWidget):
 		print('Enviando mensagens para ' + str(len(self.contact_list)) + ' contatos.')
 
 		for contact in self.contact_list: 
+			print('[~]=====================================================[~]')
 			print('Enviando mensagem para ' + contact)
-			message_sender.sendMessage(contact, self.messages)
-			print('Mensagem enviada para ' + contact)
-
-		print('------------------')
+			if (message_sender.sendMessage(contact, self.messages)):
+				print('Mensagem enviada para ' + contact)
+			else:
+				print('Falha ao enviar a mensagem para ' + contact)
+		
+		print('[~]=====================================================[~]')
+		print('\n\n')
+		print('[~]=====================================================[~]')
 		print('Mensagens enviadas com sucesso para ' + str(len(self.contact_list)) + ' contatos.')
 		print('Finalizado.')
-		print('------------------')
+		print('[~]=====================================================[~]')
 
 	def handleSaveClick(self):
 		self.getFormData()
