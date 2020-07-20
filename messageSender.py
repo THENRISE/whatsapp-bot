@@ -220,7 +220,7 @@ class MessageSender():
 					continue
 
 				# Se o caractere não for digitado, tentar novamente
-				while ((inner_text == '') or (char != inner_text[-1]) or (char == last_char)):
+				while ((len(inner_text) < 1) or (char != inner_text[-1]) or (char == last_char)):
 					chat_box.send_keys(char)
 
 					self.await_by('char')
@@ -233,9 +233,9 @@ class MessageSender():
 					if (char == last_char):
 						# Se o caractere foi digitado
 						if (
-							len(inner_text) > 0
-							and char == inner_text[-1]
-							and char == inner_text[-2]
+							(len(inner_text) > 0)
+							and (char == inner_text[-1])
+							and (char == inner_text[-2])
 						):
 							message_slice += char
 							last_char = ''
@@ -243,12 +243,15 @@ class MessageSender():
 					# Se não for igual
 					else:
 						# Se o caractere foi digitado
-						if ((len(inner_text) > 0) and (char == inner_text[-1])):
+						if (
+							(len(inner_text) > 0)
+							and (char == inner_text[-1])
+						):
 							message_slice += char
 							last_char = ''
 							continue
 
-					print('Tentando inserir o caractere [' + char + '] novamente.')
+					print(f"Tentando inserir o caractere [{char}] novamente.")
 				
 				last_char = char
 

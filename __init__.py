@@ -12,6 +12,8 @@ from PyQt5.QtWidgets import (
 )
 from storage import Storage
 from messageSender import MessageSender
+from datetime import datetime
+import random
 import pickle
 import sys
 import os
@@ -110,7 +112,7 @@ class HomeWindow(QWidget):
 			return
 
 		# A mensagem a ser enviada, obtida pelo campo "Mensagem"
-		self.messages = self.message.split('\n')
+		self.messages = self.message.split('===')
 
 		# Nome dos grupos ou pessoas a quem você deseja enviar a mensagem
 		# Deve estar exatamente igual que aparece no WhatsApp
@@ -132,21 +134,40 @@ class HomeWindow(QWidget):
 		message_sender.openWhatsApp()
 
 		print('Enviando mensagens para ' + str(len(self.contact_list)) + ' contatos.')
+		
+		success_sent = 0
+		failed_sent = 0
+
+		self.log('[~]=====================================================[~]')
+		self.log(f"Enviando mensagens para {str(len(self.contact_list))} contatos.")
+		self.log(f"Início em: {self.getTimestamp()}.\n")
 
 		for contact in self.contact_list: 
 			print('[~]=====================================================[~]')
 			print('Enviando mensagem para ' + contact)
-			if (message_sender.sendMessage(contact, self.messages)):
+			if (message_sender.sendMessage(contact, (random.choice(self.messages)).split('\n'))):
 				print('Mensagem enviada para ' + contact)
+				self.log(f"+ {contact}, {self.getTimestamp()}")
+				success_sent += 1
 			else:
 				print('Falha ao enviar a mensagem para ' + contact)
+				self.log(f"# {contact}, {self.getTimestamp()}")
+				failed_sent += 1
 		
 		print('[~]=====================================================[~]')
 		print('\n\n')
 		print('[~]=====================================================[~]')
-		print('Mensagens enviadas com sucesso para ' + str(len(self.contact_list)) + ' contatos.')
+		print(f"Mensagens enviadas com sucesso para {success_sent} contatos.")
+		print(f"{failed_sent} mensagens falharam.")
+		print(f"Total: {str(len(self.contact_list))}")
 		print('Finalizado.')
 		print('[~]=====================================================[~]')
+
+		self.log(f"\nFinalizado em {self.getTimestamp()}")
+		self.log(f"{success_sent} mensagens enviadas com sucesso.")
+		self.log(f"{failed_sent} falharam.")
+		self.log(f"Total: {str(len(self.contact_list))}")
+		self.log('[~]=====================================================[~]\n')
 
 	def handleSaveClick(self):
 		self.getFormData()
@@ -230,6 +251,13 @@ class HomeWindow(QWidget):
 		self.max_char_wait = self.line_edit_chars_max.text()
 
 		return self.checkFormData()
+
+	def log(self, message):
+		os.system(f"echo \"{message}\" >> ./sent-log.txt")
+
+	def getTimestamp(self):
+		datetime_obj = datetime.now()
+		return datetime_obj.strftime("%d-%m-%Y %H:%M:%S")
 
 if __name__ == '__main__':
 	app = QApplication(sys.argv)
