@@ -1,5 +1,9 @@
 # BOT para WhatsApp Web
 
+O WhatsApp bot é um software de automação de envio de mensagens ilimitadamente sem dependência de servidores ou serviços terceiros. O grande problema de macros que enviam mensagens automaticamente, é terem suas contas do WhatsApp banidas por spam.
+
+O WhatsApp Bot consegue digitar as mensagens como um humano faria, desta forma as chances de ter a conta banida diminuem drasticamente, além disso é possível enviar mensagens diferentes alternadamente, também para diminuir a chance de ter a conta banida, além disso, é possível enviar mensagens para contatos que não tenham te adicionado ainda, como não é possível fazer em listas de transmissão.
+
 ## Configuração
 
 Este bot não precisa de APIs terceiras para funcionar, mas necessita que alguns requisitos sejam atendidos:
@@ -13,8 +17,8 @@ Este bot não precisa de APIs terceiras para funcionar, mas necessita que alguns
 
 - Ou, **opcionalmente**, instalar as seguintes bibliotecas Python manualmente utilizando o `pip3 install`:
 
-	- PyQt5         4.19.0 [Documentação](https://www.riverbankcomputing.com/static/Docs/PyQt5/) -> `# pip3 install PyQt5`
-	- selenium            3.141.0 [Documentação](https://www.selenium.dev/documentation/en/webdriver/keyboard/) -> `# pip3 install selenium`
+	- PyQt5			4.19.0 [Documentação](https://www.riverbankcomputing.com/static/Docs/PyQt5/) -> `# pip3 install PyQt5`
+	- selenium      3.141.0 [Documentação](https://www.selenium.dev/documentation/en/webdriver/keyboard/) -> `# pip3 install selenium`
 
 - No arquivo `messageSender.py`, altere a importação do `chromedriver` para o diretório onde está o executável caso necessário. Por padrão, se encontra na raiz do projeto com o nome `chromedriver`:
 
@@ -37,7 +41,7 @@ A seguinte janela será exibida:
 
 ![Tela do Aplicativo](.github/screen.png)
 
-Informe a mensagem que quiser, e no campo contatos informe uma lista de nomes, um nome em cada linha, que deve estar exatamente como o nome do contato que aparece no chat do WhatsApp.
+Informe a mensagem que quiser, e no campo contatos informe uma lista de nomes, um nome em cada linha, que deve estar exatamente como o nome do contato que aparece no chat do WhatsApp. Caso queira enviar aleatóriamente uma mensagem em uma lista de mensagens, separe cada mensagem por `===`, dessa forma as chances de ter o WhatsApp bloqueado diminui.
 
 Clicando em iniciar uma nova janela do chrome será aberta, e você terá 15 segundos para scanear o QR code. Então o BOT manda a mensagem para todos os contatos listados em intervalos diferentes.
 
