@@ -231,13 +231,13 @@ class MessageSender():
 					# Se o último caractere digitado for igual ao caractere atual
 					if (char == last_char):
 						# Se o caractere foi digitado
-						if (char == inner_text[-1] && char == inner_text[-2]):
+						if (char == inner_text[-1] and char == inner_text[-2]):
 							message_slice += char
 							last_char = ''
 							continue
 					
 					# Se o caractere foi digitado
-					if (char == inner_text[-1] && char == inner_text[-2]):
+					if (char == inner_text[-1] and char == inner_text[-2]):
 						message_slice += char
 						last_char = ''
 						continue
