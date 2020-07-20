@@ -236,12 +236,13 @@ class MessageSender():
 							message_slice += char
 							last_char = ''
 							continue
-					
-					# Se o caractere foi digitado
-					if (char == inner_text[-1]):
-						message_slice += char
-						last_char = ''
-						continue
+					# Se não for igual
+					else:
+						# Se o caractere foi digitado
+						if (char == inner_text[-1]):
+							message_slice += char
+							last_char = ''
+							continue
 
 					print('Tentando inserir o caractere [' + char + '] novamente.')
 				
