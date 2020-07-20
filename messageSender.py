@@ -135,11 +135,11 @@ class MessageSender():
 					.replace('\n', '')
 				inner_text = removeAllEmojis(inner_text_with_emojis)
 
-				# Se o caractere for %, prepare para pressionar TAB
-				if (emoji and (char == '%')):
+				# Se o caractere for &, prepare para pressionar TAB
+				if (emoji and (char == '&')):
 					message_slice += char
-					# Se este é o segundo caractere %, pressiona o TAB
-					if (press_tab and (char == '%')):
+					# Se este é o segundo caractere &, pressiona o TAB
+					if (press_tab and (char == '&')):
 						print('Inserindo emoji...')
 						# Se o caractere não for inserido, tente novamente
 						while (inner_text != message_slice):
@@ -193,7 +193,7 @@ class MessageSender():
 							inner_text = removeAllEmojis(inner_text_with_emojis)
 
 							# Remover o código de inserção do emoji da string
-							emoji_pattern = re.compile(r'[^\s]*%%')
+							emoji_pattern = re.compile(r'[^\s]*&&')
 							message = emoji_pattern.sub(r'', message)
 							message_slice = emoji_pattern.sub(r'', message_slice)
 
@@ -217,7 +217,7 @@ class MessageSender():
 
 					press_tab = True
 					continue
-
+				0
 				# Se o caractere não for digitado, tentar novamente
 				while ((inner_text == '') or (char != inner_text[-1]) or (char == last_char)):
 					chat_box.send_keys(char)
@@ -228,8 +228,16 @@ class MessageSender():
 						.replace('\n', '')
 					inner_text = removeAllEmojis(inner_text_with_emojis)
 
+					# Se o último caractere digitado for igual ao caractere atual
+					if (char == last_char):
+						# Se o caractere foi digitado
+						if (char == inner_text[-1] && char == inner_text[-2]):
+							message_slice += char
+							last_char = ''
+							continue
+					
 					# Se o caractere foi digitado
-					if (char == inner_text[-1]):
+					if (char == inner_text[-1] && char == inner_text[-2]):
 						message_slice += char
 						last_char = ''
 						continue
