@@ -96,7 +96,7 @@ class MessageSender():
 				.until(
 					expected_conditions \
 						.presence_of_element_located((
-							By.XPATH,
+				~			By.XPATH,
 							f"//span[@title='{contact}']"
 						)) # presence_of_element_located
 				) # until
