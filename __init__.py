@@ -54,22 +54,23 @@ class HomeWindow(QWidget):
 
 		# Se existirem configurações de intervalo salvos, carregue-os
 		if (os.path.exists('./timing.dat')):
-			initial_timing = pickle.load(open('./timing.dat', 'rb'))
+			self.initial_timing = pickle.load(open('./timing.dat', 'rb'))
 		else:
-			initial_timing = {
+			self.initial_timing = {
 				'minStepWait': '2',
 				'maxStepWait': '4',
 				'minNextWait': '5',
 				'maxNextWait': '7',
 				'minCharWait': '0.3',
-				'maxCharWait': '0.7'
-			} # initial_timing
+				'maxCharWait': '0.7',
+				'initTimer': '0',
+			} # self.initial_timing
 
 		# Intervalo entre os passos
 		label_step_interval = QLabel('<font size="3">Intervalo entre <b>passos</b> em seg.:</font>')
-		self.line_edit_step_min = QLineEdit(initial_timing['minStepWait'])
+		self.line_edit_step_min = QLineEdit(self.initial_timing['minStepWait'])
 		label_step_divider = QLabel('<font size="3">a</font>')
-		self.line_edit_step_max = QLineEdit(initial_timing['maxStepWait'])
+		self.line_edit_step_max = QLineEdit(self.initial_timing['maxStepWait'])
 		layout.addWidget(label_step_interval, 5, 0)
 		layout.addWidget(self.line_edit_step_min, 5, 1)
 		layout.addWidget(label_step_divider, 5, 2)
@@ -77,9 +78,9 @@ class HomeWindow(QWidget):
 
 		# Intervalo entre os contatos
 		label_contact_interval = QLabel('<font size="3">Intervalo entre <b>contatos</b> em seg.:</font>')
-		self.line_edit_contact_min = QLineEdit(initial_timing['minNextWait'])
+		self.line_edit_contact_min = QLineEdit(self.initial_timing['minNextWait'])
 		label_contact_divider = QLabel('<font size="3">a</font>')
-		self.line_edit_contact_max = QLineEdit(initial_timing['maxNextWait'])
+		self.line_edit_contact_max = QLineEdit(self.initial_timing['maxNextWait'])
 		layout.addWidget(label_contact_interval, 6, 0)
 		layout.addWidget(self.line_edit_contact_min, 6, 1)
 		layout.addWidget(label_contact_divider, 6, 2)
@@ -87,13 +88,19 @@ class HomeWindow(QWidget):
 
 		# Intervalo entre os caracteres
 		label_chars_interval = QLabel('<font size="3">Intervalo entre <b>caracteres</b> em seg.:</font>')
-		self.line_edit_chars_min = QLineEdit(initial_timing['minCharWait'])
+		self.line_edit_chars_min = QLineEdit(self.initial_timing['minCharWait'])
 		label_chars_divider = QLabel('<font size="3">a</font>')
-		self.line_edit_chars_max = QLineEdit(initial_timing['maxCharWait'])
+		self.line_edit_chars_max = QLineEdit(self.initial_timing['maxCharWait'])
 		layout.addWidget(label_chars_interval, 7, 0)
 		layout.addWidget(self.line_edit_chars_min, 7, 1)
 		layout.addWidget(label_chars_divider, 7, 2)
 		layout.addWidget(self.line_edit_chars_max, 7, 3)
+
+		# Tempo de espera para iniciar o envio
+		label_init_timer = QLabel('<font size="3">Espera para iniciar o envio em min.:</font>')
+		self.line_edit_init_timer = QLineEdit(self.initial_timing['initTimer'])
+		layout.addWidget(label_init_timer, 8, 0)
+		layout.addWidget(self.line_edit_init_timer, 8, 1)
 
 		button_start = QPushButton('Iniciar')
 		button_start.clicked.connect(self.handleStartClick)
@@ -120,7 +127,13 @@ class HomeWindow(QWidget):
 		self.contact_list = self.contact_list.split('\n')
 
 		# Obter as configurações de timing
-		self.timing = pickle.load(open('timing.dat', 'rb'))
+		try:
+			self.timing = pickle.load(open('timing.dat', 'rb'))
+		except:
+			print('Nenhum dado salvo encontrado.')
+			print('Gerando arquivos de configurações (salvamento automático).')
+			self.timing = self.initial_timing
+			self.handleSaveClick()
 
 		message_sender = MessageSender({
 			'minStepWait': self.min_step_wait,
@@ -128,7 +141,8 @@ class HomeWindow(QWidget):
 			'minNextWait': self.min_next_wait,
 			'maxNextWait': self.max_next_wait,
 			'minCharWait': self.min_char_wait,
-			'maxCharWait': self.max_char_wait
+			'maxCharWait': self.max_char_wait,
+			'initTimer': self.init_timer,
 		}) # MessageSender
 
 		message_sender.openWhatsApp()
@@ -180,7 +194,8 @@ class HomeWindow(QWidget):
 			self.min_next_wait,
 			self.max_next_wait,
 			self.min_char_wait,
-			self.max_char_wait
+			self.max_char_wait,
+			self.init_timer
 		) # saveData
 
 	def handleExitClick(self):
@@ -222,17 +237,26 @@ class HomeWindow(QWidget):
 			message_box.setText('Informe o <b>intervalo máximo</b> entre os <b>caracteres</b>!')
 			error = True
 
-		if (float(self.min_step_wait) > float(self.max_step_wait)):
-			message_box.setText('O <b>intervalo mínimo de passos</b> deve ser menor que o <b>intervalo máximo</b>!')
+		if (self.init_timer.replace(' ', '') == ''):
+			message_box.setText('Informe a <b>espera para o início do envio</b>!')
 			error = True
 
-		if (float(self.min_next_wait) > float(self.max_next_wait)):
-			message_box.setText('O <b>intervalo mínimo entre contatos</b> deve ser menor que o <b>intervalo máximo</b>!')
-			error = True
+		if (not error):
+			if (float(self.min_step_wait) > float(self.max_step_wait)):
+				message_box.setText('O <b>intervalo mínimo de passos</b> deve ser menor que o <b>intervalo máximo</b>!')
+				error = True
 
-		if (float(self.min_char_wait) > float(self.max_char_wait)):
-			message_box.setText('O <b>intervalo mínimo entre caractere</b> deve ser menor que o <b>intervalo máximo</b>!')
-			error = True
+			if (float(self.min_next_wait) > float(self.max_next_wait)):
+				message_box.setText('O <b>intervalo mínimo entre contatos</b> deve ser menor que o <b>intervalo máximo</b>!')
+				error = True
+
+			if (float(self.min_char_wait) > float(self.max_char_wait)):
+				message_box.setText('O <b>intervalo mínimo entre caractere</b> deve ser menor que o <b>intervalo máximo</b>!')
+				error = True
+
+			if (float(self.init_timer) < 0):
+				message_box.setText('A <b>espera para o início do envio</b> deve ser <b>maior ou igual</b> a zero!')
+				error = True
 
 		if (error):
 			message_box.exec_()
@@ -249,6 +273,7 @@ class HomeWindow(QWidget):
 		self.max_next_wait = self.line_edit_contact_max.text()
 		self.min_char_wait = self.line_edit_chars_min.text()
 		self.max_char_wait = self.line_edit_chars_max.text()
+		self.init_timer = self.line_edit_init_timer.text()
 
 		return self.checkFormData()
 

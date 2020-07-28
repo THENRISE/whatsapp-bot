@@ -41,6 +41,12 @@ class MessageSender():
 		# Iniciar o WhatsApp aguardar 30 segundos
 		self.driver.get('https://web.whatsapp.com')
 
+		# Atrasar o início do envio
+		if (int(self.timing['initTimer']) > 0.99):
+			for minutes in range(int(self.timing['initTimer']) -1, -1, -1): 
+				print('Enviando mensagens em ' + str(minutes + 1) + ' min...')
+				time.sleep(1 * 60)
+
 		for seconds in range(15, -1, -1):
 			print('Enviando mensagens em ' + str(seconds) + ' seg...')
 			time.sleep(1)

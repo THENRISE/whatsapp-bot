@@ -11,7 +11,8 @@ class Storage():
 		min_next_wait, 
 		max_next_wait,
 		min_char_wait,
-		max_char_wait
+		max_char_wait,
+		init_timer
 	):
 		# Salvar em arquivos as configurações
 		pickle.dump(message, open('messages.dat', 'wb'))
@@ -22,5 +23,6 @@ class Storage():
 			'minNextWait': min_next_wait,
 			'maxNextWait': max_next_wait,
 			'minCharWait': min_char_wait,
-			'maxCharWait': max_char_wait
+			'maxCharWait': max_char_wait,
+			'initTimer': init_timer
 		}, open('timing.dat', 'wb'))
