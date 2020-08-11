@@ -118,6 +118,14 @@ class HomeWindow(QWidget):
 		if (not self.getFormData()):
 			return
 
+		print('[~]================[ WhatsApp BOT 0.9 ]=================[~]')
+		print('')
+		print('Criado por: gustavo.c.franca@anhanguera.com')
+		print('            T.I. Anhanguera Taubaté')
+		print('')
+		print('[~]=====================================================[~]')
+		print('')
+
 		# A mensagem a ser enviada, obtida pelo campo "Mensagem"
 		self.messages = self.message.split('===')
 

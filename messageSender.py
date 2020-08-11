@@ -130,6 +130,16 @@ class MessageSender():
 		for index, message in enumerate(messages):
 			# Escrever cada caractere da mensagem individualmente no chat
 			for char in list(message):
+				# Enviar a mensagem
+				if (char == '§'):
+					# Selecionar o botão de enviar
+					send_button = self.driver \
+						.find_element_by_xpath('//span[@data-icon="send"]')
+					self.await_by('step')
+					send_button.click()
+					message_slice = ''
+					continue
+
 				if (char == ':'):
 					print('Emoji encontrado.')
 					emoji = True
