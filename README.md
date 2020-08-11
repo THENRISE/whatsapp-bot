@@ -41,11 +41,56 @@ A seguinte janela será exibida:
 
 ![Tela do Aplicativo](.github/screen.png)
 
-Informe a mensagem que quiser, e no campo contatos informe uma lista de nomes, um nome em cada linha, que deve estar exatamente como o nome do contato que aparece no chat do WhatsApp. Caso queira enviar aleatóriamente uma mensagem em uma lista de mensagens, separe cada mensagem por `===`, dessa forma as chances de ter o WhatsApp bloqueado diminui.
+Você pode usar o computador para outras atividades e também utilizar o WhatsApp no celular enquanto o BOT está funcionando.
+
+A configuração padrão de intervalos enviará uma média de 30 mensagens por hora, abaixar os intervalos enviará mais mensagens, porém exige que você tenha um bom computador e que não esteja executando tarefas intensivas durante a sua utilização.
+
+## Enviando mensagens
+
+Informe a mensagem que quiser, e no campo contatos informe uma lista de nomes, um nome em cada linha, que **deve estar exatamente como o nome do contato que aparece no chat do WhatsApp e não use emojis em nomes de contatos!!**
+
+**Veja o exemplo de lista de contatos:**
+
+```
+	1244448888
+	João Paulo
+	Grupo Trabalho
+	Ricardo Pai
+	1155557777
+	Ana
+```
 
 Clicando em iniciar uma nova janela do chrome será aberta, e você terá 15 segundos para scanear o QR code. Então o BOT manda a mensagem para todos os contatos listados em intervalos diferentes.
 
-Você pode usar o computador para outras atividades e também utilizar o WhatsApp no celular enquanto o BOT está funcionando.
+## Enviar uma mensagem aleatória
+
+Caso queira enviar aleatóriamente uma mensagem em uma lista de mensagens, separe cada mensagem por `===`, dessa forma as chances de ter o WhatsApp bloqueado diminui.
+
+**Veja o exemplo:**
+
+```
+	Mensagem 1
+	===
+	Mensagem 2
+	===
+	Mensagem 3
+```
+
+## Comando [Enviar Mensagem]
+
+Se desejar dividir as mensagens em mensagens menores use o caractere `§`. Esta prática é recomendável pois desta forma torna as conversas mais naturais, e é possível também variar o tamanho das mensagens de forma flexível para diminuir ainda mais a chance ter a conta banida.
+
+**Veja o exemplo:**
+
+```
+	Olá tudo bem?§Meu nome é João, e queria lhe fazer uma oferta para usar nosso produto.§O WhatsApp Bot!!
+	===
+	Olá, sou o João.§Posso lhe fazer uma proposta?§Use o WhatsApp Bot Hoje mesmo!§Acesse meu site: google.com
+```
+
+A mensagem foi dividida em duas mensagens aleatórias e ainda foi subdividida em mensagens menores para enviar uma parte de cada vez.
+
+## Emojis
 
 **Se Você estiver usando emojis, é obrigatório manter o foco na janela do WhatsApp**, nesse caso você não pode estar usando o computador para outras coisas. O `chromedriver` não dá suporte a emojis, portanto, cada emoji deve ser pesquisado pela palavra chave que pode ser encontrada [aqui](https://gist.github.com/hkan/264423ab0ee720efb55e05a0f5f90887), recomendamos que teste para encontrar a melhor palavra chave, para testar escreva no campo de texto do chat do WhatsApp, por exemplo `:receive`, uma lista de emojis devem aparecer, e você deve se certificar que o primeiro que aparece é o `📲`. A sintáxe para inserir o emoji deve ser a seguinte:
 
@@ -55,5 +100,14 @@ Você pode usar o computador para outras atividades e também utilizar o WhatsAp
 
 Note que `_` significa que são espaços, um antes do emoji, e dois espaços depois do emoji. Os símbolos `:` e também `&&` são obrigatórios entre a palavra chave do emoji.
 
-A configuração padrão de intervalos enviará uma média de 60 mensagens por hora, abaixar os intervalos enviará mais mensagens, porém exige que você tenha um bom computador e que não esteja executando tarefas intensivas durante a sua utilização.
+**Veja o exemplo:**
 
+```
+	Olá, tudo bem?
+
+	Por favor, entre em contato :receive&&  comigo assim que possível.
+```
+
+## Registros de atividade
+
+No diretório onde se encontra o WhatsApp Bot, sempre é salvo um registro das mensagens que foram enviadas no arquivo `sent-log.txt`.
